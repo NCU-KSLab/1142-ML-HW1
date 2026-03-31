@@ -7,10 +7,10 @@ def load_and_explore_data(file_path):
     df = pd.read_csv(file_path, encoding='utf-8-sig')  # ← 請勿修改此行
 
     # TODO 1.1: 顯示前 5 筆資料
-
+    print(df.head(5))
 
     # TODO 1.2: 查看資料結構（欄位、型態、缺失值）
-
+    print(df.info())
 
     return df  # ← 請勿修改 return
 
@@ -18,36 +18,23 @@ def load_and_explore_data(file_path):
 def feature_engineering(df):
     """任務二：計算總分、平均分數與是否及格"""
 
-    # TODO 2.1: 計算總分（五科加總）
-    df['總分'] = None
+    df['總分'] = df[['數學', '英文', '國文', '自然', '社會']].sum(axis=1)
+    df['平均'] = df[['數學', '英文', '國文', '自然', '社會']].mean(axis=1)
+    df['是否及格'] = df['平均'] >= 60
 
-    # TODO 2.2: 計算平均分數
-    df['平均'] = None
-
-    # TODO 2.3: 新增是否及格欄位（平均 >= 60 為及格）
-    df['是否及格'] = None
-
-    return df  # ← 請勿修改 return
+    return df
 
 
 def filter_and_analyze_data(df):
     """任務三與五：篩選資料與統計"""
 
-    # TODO 3.1: 找出數學成績 < 60 的學生
-    math_failed = None
-
-    # TODO 3.2: 找出班級為 'A' 且英文 > 90 的學生
-    high_A = None
-
-    # TODO 5.1: 顯示所有科目及平均分數的統計摘要
-    summary = None
-
-    # TODO 5.2: 找出總分最高的學生
-    # Hint: 可以先找到總分最高分，再篩選對應學生
+    math_failed = df[df['數學'] < 60]
+    high_A = df[(df['班級'] == 'A') & (df['英文'] > 90)]
+    summary = df[['數學', '英文', '國文', '自然', '社會', '平均']].describe()
     max_total = df['總分'].max()
-    top_student = None
+    top_student = df[df['總分'] == max_total]
 
-    return {  # ← 請勿修改 return 結構（key 名稱不可變動）
+    return {
         "processed_df": df,
         "math_failed": math_failed,
         "high_A": high_A,
@@ -59,15 +46,10 @@ def filter_and_analyze_data(df):
 def group_statistics(df):
     """任務四：使用 groupby 進行分組統計"""
 
-    # TODO 4.1: 計算各班級的平均總分
-    # Hint: df.groupby(...)['總分'].mean()
-    class_avg_total = None
+    class_avg_total = df.groupby('班級')['總分'].mean()
+    gender_pass_rate = df.groupby('性別')['是否及格'].mean()
 
-    # TODO 4.2: 計算各性別的及格率
-    # Hint: 是否及格欄位為 True/False，mean() 可直接計算比例
-    gender_pass_rate = None
-
-    return {  # ← 請勿修改 return 結構（key 名稱不可變動）
+    return {
         "class_avg_total": class_avg_total,
         "gender_pass_rate": gender_pass_rate
     }
@@ -76,8 +58,7 @@ def group_statistics(df):
 def save_results(df, output_file_path):
     """任務六：儲存為 CSV"""
 
-    # TODO 6.1: 儲存 CSV，避免中文亂碼
-    # Hint: df.to_csv(...)
+    df.to_csv(output_file_path, index=False, encoding='utf-8-sig')
 
 
 
