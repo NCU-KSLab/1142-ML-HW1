@@ -27,8 +27,7 @@ def feature_engineering(df):
     df['平均'] = df['總分'] / len(subjects)
 
     # TODO 2.3: 新增是否及格欄位（平均 >= 60 為及格）
-    import numpy as np
-    df['是否及格'] = np.where(df['平均'] >= 60, '及格', '不及格')
+    df['是否及格'] = df['平均'] >= 60
 
     return df  # ← 請勿修改 return
 
