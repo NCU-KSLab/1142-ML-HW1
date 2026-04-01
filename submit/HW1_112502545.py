@@ -43,7 +43,7 @@ def filter_and_analyze_data(df):
 
     # TODO 5.1: 顯示所有科目及平均分數的統計摘要
     summary = None
-    summary = df['平均'].describe()
+    summary = df.describe()
 
     # TODO 5.2: 找出總分最高的學生
     # Hint: 可以先找到總分最高分，再篩選對應學生
