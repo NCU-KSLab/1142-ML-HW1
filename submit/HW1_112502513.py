@@ -10,8 +10,7 @@ def load_and_explore_data(file_path):
     print(df.head(5))
 
     # TODO 1.2: 查看資料結構（欄位、型態、缺失值）
-    print(df.columns)
-    print(df.dtypes)
+
     print(df.info())
 
     return df  # ← 請勿修改 return
@@ -21,7 +20,7 @@ def feature_engineering(df):
     """任務二：計算總分、平均分數與是否及格"""
 
     # TODO 2.1: 計算總分（五科加總）
-    df['總分'] = df['國文']+df['數學']+df['英文']+df['自然']+df['社會']
+    df['總分'] = df[['國文','數學','英文','自然','社會']].sum(axis=1)
 
     # TODO 2.2: 計算平均分數
     df['平均'] = df[['國文','數學','英文','自然','社會']].mean(axis=1)
