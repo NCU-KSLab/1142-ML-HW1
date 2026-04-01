@@ -68,8 +68,10 @@ def group_statistics(df):
 
     # TODO 4.2: 計算各性別的及格率
     # Hint: 是否及格欄位為 True/False，mean() 可直接計算比例
+
     is_pass_bool = df['是否及格'] == '及格'
     gender_pass_rate = is_pass_bool.groupby(df['性別']).mean()
+    gender_pass_rate = df.groupby('性別')['是否及格'].mean()
 
     return {  # ← 請勿修改 return 結構（key 名稱不可變動）
         "class_avg_total": class_avg_total,
