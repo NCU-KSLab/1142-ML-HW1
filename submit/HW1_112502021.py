@@ -76,7 +76,7 @@ def save_results(df, output_file_path):
     """任務六：儲存為 CSV"""
 
     # TODO 6.1: 儲存 CSV，避免中文亂碼
-    # Hint: df.to_csv(output_file_path,encoding="utf-8-sig")
+    df.to_csv(output_file_path,encoding="utf-8-sig")
 
 
 
