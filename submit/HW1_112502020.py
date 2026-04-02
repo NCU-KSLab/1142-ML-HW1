@@ -7,10 +7,10 @@ def load_and_explore_data(file_path):
     df = pd.read_csv(file_path, encoding='utf-8-sig')  # ← 請勿修改此行
 
     # TODO 1.1: 顯示前 5 筆資料
-    print(df.head(5))
+    df.head(5)
 
     # TODO 1.2: 查看資料結構（欄位、型態、缺失值）
-    print(df.info())
+    df.info()
 
     return df  # ← 請勿修改 return
 
@@ -78,7 +78,7 @@ def save_results(df, output_file_path):
 
     # TODO 6.1: 儲存 CSV，避免中文亂碼
     # Hint: df.to_csv(...)
-    df.to_csv(output_file_path, encoding='utf-8-sig', index=False)
+    df.to_csv(output_file_path, encoding = 'utf-8-sig', index = False)
 
 
 
