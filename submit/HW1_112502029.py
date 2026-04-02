@@ -45,7 +45,7 @@ def filter_and_analyze_data(df):
     # TODO 5.2: 找出總分最高的學生
     # Hint: 可以先找到總分最高分，再篩選對應學生
     max_total = df['總分'].max()
-    top_student = df[df['總分'] >= max_total]['姓名']
+    top_student = df[df['總分'] >= max_total]
 
     return {  # ← 請勿修改 return 結構（key 名稱不可變動）
         "processed_df": df,
