@@ -2,6 +2,13 @@
 import os
 import pandas as pd
 
+_here = os.getcwd()
+for _candidate in ['../grades.csv', 'grades.csv']:
+    if os.path.exists(_candidate):
+        GRADES_CSV = _candidate
+        break
+
+
 def load_and_explore_data(file_path):
     """任務一：讀取 CSV 並初步探索資料"""
     df = pd.read_csv(file_path, encoding='utf-8-sig')  # ← 請勿修改此行
@@ -33,7 +40,6 @@ def feature_engineering(df):
 
 def filter_and_analyze_data(df):
     """任務三與五：篩選資料與統計"""
-
     # TODO 3.1: 找出數學成績 < 60 的學生
     math_failed = df[df['數學'] < 60]
 
