@@ -2,7 +2,7 @@ name: Student Submission Review
 
 on:
   pull_request_target:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
 
 jobs:
   validate_submission:
@@ -156,13 +156,22 @@ jobs:
 
       - name: Run Gemini AI Review
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEYS: ${{ secrets.GEMINI_API_KEYS }}
         run: |
           python3 - <<EOF
           import os
+          import random
           import google.generativeai as genai
 
-          genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+          raw = os.getenv("GEMINI_API_KEYS", "")
+          keys = [k.strip() for k in raw.split(",") if k.strip()]
+          if not keys:
+              raise RuntimeError("未設定 GEMINI_API_KEYS 或內容為空")
+
+          api_key = random.choice(keys)
+          print(f"已隨機選取 1 把 key(共 {len(keys)} 把可用)")
+
+          genai.configure(api_key=api_key)
 
           diff = open("pr_diff.txt", encoding="utf-8").read()
           prompt = f"""你是一位資深軟體工程師。
